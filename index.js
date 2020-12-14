@@ -14,7 +14,7 @@
 */
 
 function processFirstItem(stringList, callback) {
-  return callback(stringList[0])
+  return callback(stringList[0]);
 }
 console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
 
@@ -45,7 +45,7 @@ function counterMaker() {
   let count = 0;
   return function counter() {
    return count++;
-  }
+  };
 }
 
 const counter1 = counterMaker();
@@ -86,12 +86,13 @@ Use the finalScore function below to do the following:
 */ 
 
 function finalScore(func, number){
-  let scores = {};
-  for (let i = 1; i < number; i++){
-    scores = {
-      "Home": inning(),
-      "Away": inning()
-    }
+  let scores = {
+    "Home": 0,
+    "Away": 0
+  };
+  for (let i = 1; i <= number; i++){
+    scores['Home'] += func();
+    scores['Away'] += func();
   }
   return scores;
 }
@@ -106,7 +107,7 @@ function getInningScore(func) {
   obj = {
     "Home": inning(),
     "Away": inning()
-  }
+  };
   return obj; 
 }
 
@@ -152,11 +153,29 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(inningScore, currentInning, numPlayed) {
+  let data = [];
+  let scores = {
+    "Home": 0,
+    "Away": 0
+  };
+  for (let i = 1; i <= numPlayed; i++){
+    let away = currentInning();
+    let home = currentInning();
+    data.push(`Inning ${i}: Away ${away} - Home ${home}`);
+    scores['Home'] += home;
+    scores['Away'] += away;
+    if (i === numPlayed){
+      if (scores['Home'] === scores['Away']){
+        data.push(`This game will require extra innings: Away ${scores['Away']} - Home ${scores['Home']}`);
+      }
+      else{
+        data.push(`Final Score: Away ${scores['Away']} - Home ${scores['Home']}`);
+      }
+    }
+  }
+  return data;
 }
-
-
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
